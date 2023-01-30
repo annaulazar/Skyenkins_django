@@ -8,6 +8,6 @@ app_name = FilesConfig.name
 
 urlpatterns = [
     # path('/', FileListView.as_view(), name='list'),
-    path('', TemplateView.as_view(template_name='users/base.html')),
+    path('', TemplateView.as_view(template_name='files/home.html'), name='home'),
 
 ]

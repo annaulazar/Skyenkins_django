@@ -1,12 +1,13 @@
-from django.urls import path
+from django.urls import path, include
 
 from users.apps import UsersConfig
-from users.views import UserLogin, UserRegister
+from users.views import UserRegister
 
 app_name = UsersConfig.name
 
 urlpatterns = [
-    path('login/', UserLogin.as_view(), name='login'),
-    # path('register/', UserRegister.as_view(), name='register'),
+    path('', include('django.contrib.auth.urls')),
+    # path('login/', UserLogin.as_view(), name='login'),
+    path('register/', UserRegister.as_view(), name='register'),
 
 ]

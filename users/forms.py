@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from users.models import User
 
@@ -29,5 +29,12 @@ class StyleFormMixin:
                 field.widget = forms.HiddenInput()
 
 
+
 class UserLoginForm(StyleFormMixin, AuthenticationForm):
     pass
+
+
+class UserRegisterForm(StyleFormMixin, UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('email', 'username', 'password1', 'password2')

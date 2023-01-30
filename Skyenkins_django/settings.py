@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'django-insecure-!25d+h@l$sk*llw@02l2-r+jfwv5w(oaiiym7r#vaz5z8zire1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
     'files',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = 'user/login/'
+LOGOUT_REDIRECT_URL = '/users/login/'
 
 
 MEDIA_URL = "/media/"

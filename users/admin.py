@@ -1,17 +1,17 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 
 from users.models import User
 
 
 @admin.register(User)
 class UsersAdmin(admin.ModelAdmin):
-    list_display = ["id", "email", "username", "role"]
+    list_display = ["id", "email", "username", "is_staff"]
     search_fields = ["username", "email"]
     ordering = ["email"]
     list_display_links = ["id", "email", "username"]
+    exclude = ['first_name', 'last_name']
+    readonly_fields = ["last_login", "date_joined"]
     actions = ['make_inactive', 'make_active']
-    fields = ['email', 'username', 'password', 'role']
 
     @admin.action(description='Сделать выбранных пользователей не активными')
     def make_inactive(self, request, queryset):

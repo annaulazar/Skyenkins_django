@@ -1,8 +1,9 @@
-{% extends 'users/base.html' %}
+{% extends 'base.html' %}
 {% block content %}
     <form method="post">
     {% csrf_token %}
         {{ form.as_p }}
     <button type="submit">Войти</button>
+    <a class="" href="{% url 'users:register' %}">Регистрация</a>
     </form>
 {% endblock %}

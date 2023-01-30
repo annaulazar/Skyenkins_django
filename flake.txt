@@ -1,0 +1,5 @@
+Женя скинул в чат
+
+log = subprocess.run(["flake8", "main.py"], stdout=subprocess.PIPE, text=True) # ////////dfff
+
+print(log.stdout)
