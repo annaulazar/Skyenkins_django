@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+
+            <div class="collapse navbar-collapse" id="navbarButtonsExample">
+
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <p style="font-family: var(--bs-font-monospace); font-size: 40px; font-weight: bolder;">
+                            Загруженные файлы</p>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="{% url 'files:add' %}"
+                       class="btn btn-primary me-5 p-3">Загрузить файл</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row d-flex justify-content-center align-items-center h-100 mt-3">
+        <div class="col-lg-12 col-xl-12">
+            <div class="card text-black" style="border-radius: 25px;">
+
+                <div class="card-body p-md-5">
+                    <div class="row justify-content-center">
+
+                        <table class="table table-striped align-middle mb-0 bg-white">
+                            <thead class="bg-light">
+                            <tr>
+                                <th>Файл</th>
+                                <th>Статус</th>
+                                <th>Загружен</th>
+                                <th>Обновлен</th>
+                                <th>Действия</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in object_list %}
+                                <tr>
+                                    <td>
+                                        {{ row.file.name }}
+                                    </td>
+                                    <td>
+                                        {{ row.status }}
+                                    </td>
+                                    <td>
+                                        {{ row.created_at }}
+                                    </td>
+                                    <td>
+                                        {{ row.updated_at }}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'files:detail' row.id %}"
+                                           class="btn btn-outline-primary btn-xs">Logs Info</a>
+                                        <a href="{% url 'files:update' row.id %}"
+                                           class="btn btn-primary btn-xs">Edit</a>
+                                        <a href="#staticBackdrop" data-bs-toggle="modal"
+                                           class="btn btn-danger btn-xs">Delete</a>
+
+                                        <!-- Модальное окно -->
+                                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                             data-bs-keyboard="false" tabindex="-1"
+                                             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel1">
+                                                            Подтверждение</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Закрыть"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Действительно хотите удалить файл?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Отмена
+                                                        </button>
+                                                        <a href="{% url 'files:delete' row.id %}"
+                                                           type="button" class="btn btn-primary">Удалить</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

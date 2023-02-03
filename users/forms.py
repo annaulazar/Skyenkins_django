@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
 
 from users.models import User
 
@@ -12,10 +12,12 @@ class StyleFormMixin:
 
             if isinstance(field.widget, forms.widgets.CheckboxInput):
                 field.widget.attrs['class'] = 'form-check-input'
+                field.widget.attrs['label_class'] = 'form-check-label'
             elif isinstance(field.widget, forms.DateTimeInput):
                 field.widget.attrs['class'] = 'form-control flatpickr-basic'
             elif isinstance(field.widget, forms.DateInput):
                 field.widget.attrs['class'] = 'form-control datepicker'
+                field.widget.attrs['label_classes'] = 'form-label'
             elif isinstance(field.widget, forms.TimeInput):
                 field.widget.attrs['class'] = 'form-control flatpickr-time'
             elif isinstance(field.widget, forms.widgets.SelectMultiple):
@@ -29,12 +31,8 @@ class StyleFormMixin:
                 field.widget = forms.HiddenInput()
 
 
-
-class UserLoginForm(StyleFormMixin, AuthenticationForm):
-    pass
-
-
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
+
     class Meta:
         model = User
         fields = ('email', 'username', 'password1', 'password2')

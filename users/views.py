@@ -1,6 +1,5 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
 from django.views import View
 
 from users.forms import UserRegisterForm
@@ -25,6 +24,8 @@ class UserRegister(View):
             user = authenticate(email=email, password=password)
             login(request, user)
             return redirect('files:home')
+        if form.errors.get('password2', None):
+            form.errors['пароль'] = form.errors.pop('password2')
         context = {
             'form': form
         }
