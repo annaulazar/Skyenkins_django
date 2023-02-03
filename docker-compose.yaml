@@ -1,0 +1,80 @@
+version: '3.8'
+
+volumes:
+  postgres_data:
+  app:
+  worker:
+  celery-beat:
+
+networks:
+  main:
+
+services:
+  postgres:
+    image: postgres:14.6-alpine
+    ports:
+      - 5433:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+    networks:
+      - main
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - main
+
+  app:
+    restart: always
+    build:
+      context: .
+    volumes:
+      - ./:/app
+    env_file:
+      - ./.env
+    command:
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - '8000:8000'
+    depends_on:
+      - postgres
+    networks:
+      - main
+
+  worker:
+    restart: always
+    build:
+      context: .
+    volumes:
+      - ./:/app
+    command: [ 'celery', '--workdir=.', '-A', 'config', 'worker', '-l' ,'INFO']
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
+      - app
+      - redis
+    networks:
+      - main
+
+  celery-beats:
+    restart: always
+    build:
+      context: .
+    volumes:
+      - ./:/app
+    command: [ 'celery','--workdir=.', '-A', 'config', 'beat', '-l', 'INFO']
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
+      - app
+      - redis
+      - worker
+    networks:
+      - main
