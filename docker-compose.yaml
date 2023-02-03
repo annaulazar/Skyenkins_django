@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 volumes:
   postgres_data:
@@ -18,6 +18,12 @@ services:
       - ./postgres_data:/var/lib/postgresql/data
     env_file:
       - ./.env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT}
     networks:
       - main
 
@@ -52,7 +58,7 @@ services:
       context: .
     volumes:
       - ./:/app
-    command: [ 'celery', '--workdir=.', '-A', 'config', 'worker', '-l' ,'INFO']
+    command: [ 'celery', '--workdir=.', '-A', 'Skyenkins_django', 'worker', '-l' ,'INFO']
     env_file:
       - ./.env
     depends_on:
@@ -68,7 +74,7 @@ services:
       context: .
     volumes:
       - ./:/app
-    command: [ 'celery','--workdir=.', '-A', 'config', 'beat', '-l', 'INFO']
+    command: [ 'celery','--workdir=.', '-A', 'Skyenkins_django', 'beat', '-l', 'INFO']
     env_file:
       - ./.env
     depends_on:

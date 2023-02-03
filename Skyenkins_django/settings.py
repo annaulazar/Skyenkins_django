@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'Skyenkins_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("POSTGRES_NAME", "skyenkins_db"),
-        'USER': os.environ.get("DB_USER", "postgres"),
+        'NAME': os.environ.get("POSTGRES_NAME"),
+        'USER': os.environ.get("DB_USER"),
         'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': os.environ.get("DB_HOST", "localhost"),
-        'PORT': os.environ.get("DB_PORT", "5433"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
 
